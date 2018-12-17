@@ -1,11 +1,17 @@
 print("Hello!")
 
-import core.config.base.base as base
+import core.config.base.base as base_config
+import core.config.sys.sys as sys_config
 
-base.initialize()
+def print_base_config():
+    print("I'm " + base_config.APPLICATION_NAME + "!")
+    print("Version: " + base_config.VERSION)
+    print("License: " + base_config.LICENSE)
+    print("Author: " + base_config.AUTHOR)
+    print("Copyright: " + base_config.COPYRIGHT)
 
-print("I'm " + base.APPLICATION_NAME + "!")
-print("Version: " + base.VERSION)
-print("License: " + base.LICENSE)
-print("Author: " + base.AUTHOR)
-print("Copyright: " + base.COPYRIGHT)
+base_config.initialize()
+print_base_config()
+
+
+
