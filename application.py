@@ -12,6 +12,3 @@ def print_base_config():
 
 base_config.initialize()
 print_base_config()
-
-
-
