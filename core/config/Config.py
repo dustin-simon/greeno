@@ -19,4 +19,7 @@ class Config(ABC):
             return self.properties[propertyname]
         else:
             raise ValueError("Property '" + propertyname + "' not available.")
+
+    def getProperties():
+        return self.properties
         
