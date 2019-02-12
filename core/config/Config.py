@@ -12,4 +12,11 @@ class Config(ABC):
 
     def print(self):
         for key, value in self.properties.items():
-            print(key + ": " + value)        
+            print(key + ": " + value)
+
+    def get(propertyname):
+        if propertyname in self.properties:
+            return self.properties[propertyname]
+        else:
+            raise ValueError("Property '" + propertyname + "' not available.")
+        
