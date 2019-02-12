@@ -14,12 +14,12 @@ class Config(ABC):
         for key, value in self.properties.items():
             print(key + ": " + value)
 
-    def get(propertyname):
+    def get(self, propertyname):
         if propertyname in self.properties:
             return self.properties[propertyname]
         else:
             raise ValueError("Property '" + propertyname + "' not available.")
 
-    def getProperties():
+    def getProperties(self):
         return self.properties
         
