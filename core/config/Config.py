@@ -8,6 +8,8 @@ class Config():
         if path == None:
             raise ValueError("No file path given.")
 
+        self.extendReader = None
+
         if reader == None:
             self.reader = ConfigReader()
         elif extend == False:
