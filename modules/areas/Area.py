@@ -1,8 +1,10 @@
 from core.exception.AreaNameExistException import AreaNameExistException
 from core.exception.InvalidNameException import InvalidNameException
+from core.application.Application import Application
 
 class Area():
     areas = {}
+    config = None
 
     @staticmethod
     def getByName(name):
@@ -12,13 +14,25 @@ class Area():
         raise InvalidNameException(name)
 
     @staticmethod
+    def has(name):
+        return name in areas
+
+    @staticmethod
     def isValidName(name):
         if name == '' or name == None:
             return False
         
         return True
 
-    def __init__(self, name, parent):
+    @staticmethod
+    def _createRootArea():
+        #TODO: create root area
+    
+    @staticmethod
+    def _createConfig():
+        #TODO: create area config
+
+    def __init__(self, name, parent=None):
         if not isValidName(name):
             raise InvalidNameException(name)
 
