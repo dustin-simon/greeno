@@ -3,34 +3,34 @@ from abc import ABC
 
 class Module(ABC):
  
-    @staticmethod
-    def startModule():
+    @classmethod
+    def startModule(self):
         self.loadConfig()
         self.initModule()
         self.loadData()
 
-    @staticmethod
-    def closeModule():
+    @classmethod
+    def closeModule(self):
         self.saveData()
 
-    @staticmethod
+    @classmethod
     @abstractmethod
-    def loadConfig():
+    def loadConfig(self):
         pass
 
-    @staticmethod
+    @classmethod
     @abstractmethod
-    def loadData():
+    def loadData(self):
         pass
 
-    @staticmethod
+    @classmethod
     @abstractmethod
-    def saveData():
+    def saveData(self):
         pass
 
-    @staticmethod
+    @classmethod
     @abstractmethod
-    def initModule():
+    def initModule(self):
         pass
 
     
