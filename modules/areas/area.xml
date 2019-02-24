@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <area>
-    <rootAreaName>Im Freien</rootAreaName>
+    <rootAreaName property="true">Im Freien</rootAreaName>
 </area>

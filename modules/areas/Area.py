@@ -1,34 +1,49 @@
 from core.application.Application import Application
+from modules.Module import Module
+from core.config.Config import Config
 
-class Area():
+class Area(Module):
     areas = {}
     config = None
 
-    @staticmethod
+    @classmethod
+    def loadConfig(self):
+        app = Application.getApplication()
+        Area.config = Config(app.getConfig().get("applicationPath") + "/modules/areas/area.xml")
+        Area.config.load()
+
+    @classmethod
+    def loadData(self):
+        pass
+        #TODO: load saved data
+
+    @classmethod
+    def saveData(self):
+        pass
+        #TODO: save configured data
+
+    @classmethod
+    def initModule(self):
+        pass
+        #TODO: init module
+
+    @classmethod
     def getByName(name):
         if name in areas:
             return areas[name]
 
         raise ValueError("Area with name '" + name + "' does not exist.")
 
-    @staticmethod
+    @classmethod
     def has(name):
         return name in areas
 
-    @staticmethod
+    @classmethod
     def isValidName(name):
         if name == '' or name == None:
             return False
         
         return True
-
-    @staticmethod
-    def _createRootArea():
-        #TODO: create root area
-    
-    @staticmethod
-    def _createConfig():
-        #TODO: create area config
 
     def __init__(self, name='', parent=None):
         if not isValidName(name):
@@ -38,6 +53,7 @@ class Area():
             raise ValueError("An area with name '" + name + "' does already exist.")
         
         if parent == None:
+            pass
             #TODO: set root area as parent
         else:
             self.parent = parent
