@@ -2,12 +2,19 @@ from abc import abstractmethod
 from abc import ABC
 
 class Module(ABC):
+
+    config = None
  
     @classmethod
     def startModule(self):
-        self.loadConfig()
+        self.config = self.loadConfig()
+        self.config.load()
         self.initModule()
         self.loadData()
+
+    @classmethod
+    def getConfig(self):
+        return self.config
 
     @classmethod
     def closeModule(self):
