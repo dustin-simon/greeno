@@ -4,13 +4,12 @@ from core.config.Config import Config
 
 class Area(Module):
     areas = {}
-    config = None
 
     @classmethod
     def loadConfig(self):
         app = Application.getApplication()
-        Area.config = Config(app.getConfig().get("applicationPath") + "/modules/areas/area.xml")
-        Area.config.load()
+        return Config(app.getConfig().get("applicationPath") + "/modules/areas/area.xml")
+      
 
     @classmethod
     def loadData(self):
