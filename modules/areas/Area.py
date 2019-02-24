@@ -1,5 +1,3 @@
-from core.exception.AreaNameExistException import AreaNameExistException
-from core.exception.InvalidNameException import InvalidNameException
 from core.application.Application import Application
 
 class Area():
@@ -11,7 +9,7 @@ class Area():
         if name in areas:
             return areas[name]
 
-        raise InvalidNameException(name)
+        raise ValueError("Area with name '" + name + "' does not exist.")
 
     @staticmethod
     def has(name):
@@ -32,12 +30,12 @@ class Area():
     def _createConfig():
         #TODO: create area config
 
-    def __init__(self, name, parent=None):
+    def __init__(self, name='', parent=None):
         if not isValidName(name):
-            raise InvalidNameException(name)
+            raise ValueError("'" + name + "' is not a valid name for an area.")
 
         if name in areas:
-            raise AreaNameExistException(name)
+            raise ValueError("An area with name '" + name + "' does already exist.")
         
         if parent == None:
             #TODO: set root area as parent
