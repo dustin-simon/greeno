@@ -9,7 +9,6 @@ class Area(Module):
     def loadConfig(self):
         app = Application.getApplication()
         return Config(app.getConfig().get("applicationPath") + "/modules/areas/area.xml")
-      
 
     @classmethod
     def loadData(self):
@@ -23,39 +22,65 @@ class Area(Module):
 
     @classmethod
     def initModule(self):
-        pass
-        #TODO: init module
+        Area(self.config.get("rootAreaName"))
 
     @classmethod
-    def getByName(name):
-        if name in areas:
-            return areas[name]
+    def getByName(self, name):
+        if name in self.areas:
+            return self.areas[name]
 
         raise ValueError("Area with name '" + name + "' does not exist.")
 
     @classmethod
-    def has(name):
-        return name in areas
+    def add(self, area):
+        self.areas[area.getName()] = area
 
     @classmethod
-    def isValidName(name):
+    def has(self, name):
+        return name in self.areas
+
+    @classmethod
+    def isValidName(self, name):
         if name == '' or name == None:
             return False
         
         return True
 
     def __init__(self, name='', parent=None):
-        if not isValidName(name):
+        if not Area.isValidName(name):
             raise ValueError("'" + name + "' is not a valid name for an area.")
 
-        if name in areas:
+        if name in Area.areas:
             raise ValueError("An area with name '" + name + "' does already exist.")
         
+        rootAreaName = Area.config.get("rootAreaName")
+
         if parent == None:
-            pass
-            #TODO: set root area as parent
+            
+            if name == rootAreaName:
+                self.parent = None
+                print("created root area")
+            else:
+                self.parent = Area.getByName(rootAreaName)
+                self.parent.addChild(self)
+            print("created area. Parent: " + self.parent.getName())
+
         else:
             self.parent = parent
+            self.parent.addChild(self)
+            print("created area. Parent: " + self.parent.getName())
 
+        Area.add(self)
+            
+        self.name = name
         self.subAreas = []
         self.observers = []
+
+    def getSubAreas(self):
+        return self.subAreas
+
+    def getName(self):
+        return self.name
+
+    def addChild(self, area):
+        self.subAreas.append(area)
