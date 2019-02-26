@@ -63,16 +63,17 @@ class Area(Module):
             else:
                 self.parent = Area.getByName(rootAreaName)
                 self.parent.addChild(self)
-            print("created area. Parent: " + self.parent.getName())
+                print("created area. Parent: " + self.parent.getName())
 
         else:
             self.parent = parent
             self.parent.addChild(self)
             print("created area. Parent: " + self.parent.getName())
 
-        Area.add(self)
-            
         self.name = name
+
+        Area.add(self)
+
         self.subAreas = []
         self.observers = []
 
