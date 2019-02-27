@@ -62,26 +62,45 @@ class Area(Module):
                 print("created root area")
             else:
                 self.parent = Area.getByName(rootAreaName)
-                self.parent.addChild(self)
+                self.parent.addSubArea(self)
                 print("created area. Parent: " + self.parent.getName())
 
         else:
             self.parent = parent
-            self.parent.addChild(self)
+            self.parent.addSubArea(self)
             print("created area. Parent: " + self.parent.getName())
 
         self.name = name
 
-        Area.add(self)
-
         self.subAreas = []
         self.observers = []
 
-    def getSubAreas(self):
-        return self.subAreas
+
+        Area.add(self)
+
+
+    def getObservers(self):
+        return self.observers
+
+    def addObserver(self, observer):
+        self.observers.append(observer)
+
+    def removeObserver(self, attributeMeta):
+        pass
+        #TODO: remove observer for attribute
 
     def getName(self):
         return self.name
 
-    def addChild(self, area):
+    def addSubArea(self, area):
         self.subAreas.append(area)
+
+    def removeSubArea(self, area):
+        pass
+        #TODO: remove sub area
+    
+    def getSubAreas(self):
+        return self.subAreas
+
+    def hasSubAreas(self):
+        return len(self.subAreas) > 0
