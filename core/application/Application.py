@@ -1,5 +1,6 @@
 from core.config.Config import Config
 from core.application.AppConfigReader import AppConfigReader
+from ctypes import cdll, byref, create_string_buffer
 
 class Application():
 
@@ -15,6 +16,26 @@ class Application():
     
     def __init__(self):
         self._createConfig()
+
+    def start(self):
+        self._setProcessName()
+        #TODO: start the application
+
+    def stop(self):
+        pass
+        #TODO: stop the application
+
+    def restart(self):
+        pass
+        #TODO: restart the application
+        
+    def _setProcessName(self):
+        name = self.config.get('name')
+
+        libc = cdll.LoadLibrary('libc.so.6')
+        buff = create_string_buffer(len(name)+1)
+        buff.value = bytes(name, "UTF-8")
+        libc.prctl(15, byref(buff), 0, 0, 0)
         
     def _createConfig(self):
         self.configExtendReader = AppConfigReader()
