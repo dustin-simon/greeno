@@ -1,13 +1,16 @@
 from abc import abstractmethod
 from abc import ABC
 from modules.Module import Module
+from modules.component.ComponentMeta import ComponentMeta
+from core.config.Config import Config
+
 
 class Component(ABC, Module):
 
     @abstractmethod
     @classmethod
     def loadConfig(self):
-        pass
+        return Config(self.installationPath + "/component.xml")
 
     @abstractmethod
     @classmethod
@@ -21,5 +24,22 @@ class Component(ABC, Module):
 
     @classmethod
     def initModule(self):
-        pass
-        #TODO: init component class
+        self.meta = self._createMeta()
+
+    @classmethod
+    def _createMeta(self):
+        return ComponentMeta(self.installationPath + "/meta.xml")
+        
+    @classmethod
+    def getMeta(self):
+        return self.meta
+
+    @classmethod
+    def getConfig(self):
+        return self.config
+
+    @classmethod
+    def setInstallationPath(self, installationPath):
+        self.installationPath = installationPath
+
+    
