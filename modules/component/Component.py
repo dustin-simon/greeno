@@ -1,11 +1,12 @@
 from abc import abstractmethod
 from abc import ABC
 from modules.Module import Module
+from modules.Installable import Installable
 from modules.component.ComponentMeta import ComponentMeta
 from core.config.Config import Config
 
 
-class Component(ABC, Module):
+class Component(ABC, Module, Installable):
 
     @abstractmethod
     @classmethod
@@ -37,9 +38,4 @@ class Component(ABC, Module):
     @classmethod
     def getConfig(self):
         return self.config
-
-    @classmethod
-    def setInstallationPath(self, installationPath):
-        self.installationPath = installationPath
-
     
