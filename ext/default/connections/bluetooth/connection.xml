@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<connection>
+    <name property="true">bluetooth</name>
+    <className property="true">Bluetooth</className>
+    <uuid property="true">94f39d29-7d6d-437d-973b-fba39e49d4ee</uuid>
+    <serviceName property="true">Greeno</serviceName>
+</connection>
