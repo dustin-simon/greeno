@@ -1,9 +1,31 @@
 from abc import abstractmethod
 from abc import ABC
+from core.config.Config import Config
+from modules.ModuleConfigReader import ModuleConfigReader
+import importlib
 
 class Module(ABC):
 
-    config = None
+    @classmethod
+    def loadModules(self):
+        
+        self._createGlobalConfig()
+        
+        for name, values in self.moduleConf.getProperties().items():
+            print("module '" + name + "'")
+
+            baseClass = values["class"]
+            package = values["package"]
+
+            moduleClass = getattr(importlib.import_module(package), baseClass)
+            moduleClass.startModule()
+
+    @classmethod
+    def _createGlobalConfig(self):
+        from core.application.Application import Application
+        confPath = Application.getApplication().getConfig().get("applicationPath") + "/config/modules/modules.xml"
+        self.moduleConf = Config(confPath, ModuleConfigReader())
+        self.moduleConf.load()
  
     @classmethod
     def startModule(self):

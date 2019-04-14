@@ -1,6 +1,8 @@
+from ctypes import cdll, byref, create_string_buffer
 from core.config.Config import Config
 from core.application.AppConfigReader import AppConfigReader
-from ctypes import cdll, byref, create_string_buffer
+from modules.Module import Module
+
 
 class Application():
 
@@ -19,6 +21,7 @@ class Application():
 
     def start(self):
         self._setProcessName()
+        Module.loadModules()
         #TODO: start the application
 
     def stop(self):

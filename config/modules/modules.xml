@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modules>
+    <module>
+        <name>connection</name>
+        <package>modules.connection.Connection</package>
+        <class>Connection</class>
+    </module>
+</modules>
