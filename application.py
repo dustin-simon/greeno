@@ -6,3 +6,4 @@ app = Application.getApplication()
 app.getConfig().print()
 
 app.start()
+app.getSystemStatusObserver().join()

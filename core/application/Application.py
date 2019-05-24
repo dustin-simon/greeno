@@ -2,11 +2,18 @@ from ctypes import cdll, byref, create_string_buffer
 from core.config.Config import Config
 from core.application.AppConfigReader import AppConfigReader
 from modules.Module import Module
+from core.application.SystemStatusObserver import SystemStatusObserver
 
 
 class Application():
 
     app = None
+
+    STATUS_POWEROFF = 'POWEROFF'
+    STATUS_REBOOT = 'REBOOT'
+    STATUS_RUNNING = 'RUNNING'
+    STATUS_APPLICATION_STOP = 'APPLICATION_STOP'
+    STATUS_APPLICATION_RELOAD = 'APPLICATION_RELOAD'
 
     @staticmethod
     def getApplication():
@@ -18,14 +25,17 @@ class Application():
     
     def __init__(self):
         self._createConfig()
+        self.status = Application.STATUS_RUNNING
+        self.systemStatusObserver = SystemStatusObserver(self)
 
     def start(self):
         self._setProcessName()
+        self.systemStatusObserver.start()
         Module.loadModules()
         #TODO: start the application
 
     def stop(self):
-        pass
+        print("GoodBye!")
         #TODO: stop the application
 
     def restart(self):
@@ -49,3 +59,18 @@ class Application():
 
     def getConfig(self):
         return self.config
+
+    def setSystemStatus(self, newStatus, globalUpdate):
+        self.status = newStatus.upper()
+
+        if globalUpdate == True:
+            statusFilePath = self.config.get("applicationPath") + "/../SYSTEM_STATUS"
+            statusFile = open(statusFilePath, 'w')
+            statusFile.write(newStatus.upper())
+            statusFile.close()
+
+    def getSystemStatus(self):
+        return self.status
+
+    def getSystemStatusObserver(self):
+        return self.systemStatusObserver

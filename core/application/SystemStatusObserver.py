@@ -1,31 +1,39 @@
 from threading import Thread
-from core.application.Application import Application
 import os, os.path
+import sys
 
 class SystemStatusObserver(Thread):
 
-    def __init__(self, manager):
+    def __init__(self, application):
         Thread.__init__(self)
-        self.systemManager = manager
+        self.app = application
 
     def run(self):
-        from core.application.SystemManager import SystemManager
+        from core.application.Application import Application
 
-        while self.systemManager.getSystemStatus() == SystemManager.STATUS_RUNNING:
+        while self.app.getSystemStatus() == Application.STATUS_RUNNING:
             status = self.getStatusFromFile()
-            SystemManager.setSystemStatus(status.upper())
+            self.app.setSystemStatus(status.upper(), False)
 
-        print("goodbye!")
+        Application.getApplication().stop()
         sys.exit(0)
 
     def getStatusFromFile(self):
+        from core.application.Application import Application
+
         systemPath = Application.getApplication().getConfig().get('applicationPath') + "/../"
         statusFile = systemPath + "SYSTEM_STATUS"
 
         if os.path.isfile(statusFile):
             file = open(statusFile, 'r')
-            return file.readline()
+            newStatus = file.readline()
+            file.close()
 
-        return SystemManager.STATUS_RUNNING
+            newStatus = newStatus.strip()
+
+            if newStatus != '':
+                return newStatus
+
+        return Application.STATUS_RUNNING
 
 
