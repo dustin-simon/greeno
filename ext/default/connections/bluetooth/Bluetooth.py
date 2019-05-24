@@ -34,7 +34,6 @@ class Bluetooth(Connection):
         if channel != None:
             data = channel.recv(1024)
             response = str(data, "UTF-8")
-            print("bluetooth received: ", response)
 
             return response
 
@@ -48,6 +47,7 @@ class Bluetooth(Connection):
                 raise ValueError("No socket to send data")
         except Exception as e:
             self._startConnectionListening()
+            # TODO: better exception handling
 
     def _startConnectionListening(self):
 
@@ -74,8 +74,6 @@ class Bluetooth(Connection):
                 if data == None:
                     raise ValueError("no data received!")
 
-                print("RECEIVED: ", data)
-
                 jsonData = json.loads(data)
                 action = jsonData["action"].upper()
 
@@ -85,7 +83,6 @@ class Bluetooth(Connection):
                 self.write(response, self.clientSocket)
 
         except Exception as e:
-            print(e)
             self._startConnectionListening()
 
     def _startMessageListening(self):

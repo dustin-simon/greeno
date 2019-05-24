@@ -13,6 +13,4 @@ class PoweroffHandler(ActionHandler):
 
         jsonString = json.dumps(jsonResponse)
 
-        print(jsonString)
-
         return jsonString
