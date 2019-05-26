@@ -8,6 +8,8 @@ class PoweroffHandler(ActionHandler):
     def handleAction(self, jsonData):
 
         jsonResponse = {
+            'requestAction': self.getAction(),
+            'status': 'OK',
             "message": "Thank you!"
         }
 

@@ -78,11 +78,20 @@ class Bluetooth(Connection):
                 action = jsonData["action"].upper()
 
                 handler = Action.getHandler(action)
-                response = handler.handleAction(jsonData)
 
+                if handler != None:
+                    response = handler.handleAction(jsonData)
+                else:
+                    jsonResponse = {
+                        'status': "BAD_REQUEST"
+                    }
+
+                    response = json.dumps(jsonResponse)
+                    
                 self.write(response, self.clientSocket)
 
         except Exception as e:
+            print(e)
             self._startConnectionListening()
 
     def _startMessageListening(self):
