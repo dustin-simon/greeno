@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<action>
+    <name property="true">CREATE_AREA</name>
+    <className property="true">CreateAreaHandler</className>
+</action>
