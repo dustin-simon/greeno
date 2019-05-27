@@ -10,4 +10,9 @@
         <package>modules.action.Action</package>
         <class>Action</class>
     </module>
+    <module>
+        <name>area</name>
+        <package>modules.area.Area</package>
+        <class>Area</class>
+    </module>
 </modules>

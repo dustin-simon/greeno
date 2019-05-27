@@ -8,7 +8,7 @@ class Area(Module):
     @classmethod
     def loadConfig(self):
         app = Application.getApplication()
-        return Config(app.getConfig().get("applicationPath") + "/modules/areas/area.xml")
+        return Config(app.getConfig().get("applicationPath") + "/config/modules/area.xml")
 
     @classmethod
     def loadData(self):
