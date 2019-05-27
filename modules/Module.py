@@ -3,8 +3,19 @@ from abc import ABC
 from core.config.Config import Config
 from modules.ModuleConfigReader import ModuleConfigReader
 import importlib
+import string
+import random
+import hashlib
 
 class Module(ABC):
+
+    @staticmethod
+    def getUniqueID():
+        stringValue = ''.join(random.choice(string.ascii_lowercase) for i in range(10))
+        md5Value = hashlib.md5()
+        md5Value.update(stringValue.encode("UTF-8"))
+
+        return md5Value.hexdigest()
 
     @classmethod
     def loadModules(self):
