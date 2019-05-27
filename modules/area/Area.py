@@ -33,7 +33,7 @@ class Area(Module):
 
     @classmethod
     def add(self, area):
-        self.areas[area.getName()] = area
+        self.areas[area.getID()] = area
 
     @classmethod
     def has(self, name):
@@ -50,34 +50,35 @@ class Area(Module):
         if not Area.isValidName(name):
             raise ValueError("'" + name + "' is not a valid name for an area.")
 
-        if name in Area.areas:
-            raise ValueError("An area with name '" + name + "' does already exist.")
-        
-        rootAreaName = Area.config.get("rootAreaName")
-
         if parent == None:
             
             if name == rootAreaName:
                 self.parent = None
-                print("created root area")
             else:
+
+                rootAreaName = Area.config.get("rootAreaName")
+
                 self.parent = Area.getByName(rootAreaName)
                 self.parent.addSubArea(self)
-                print("created area. Parent: " + self.parent.getName())
 
         else:
+
+            if parent.hasSubAreaName(name):
+                raise ValueError("A subarea with name '" + name + "' does already exist in this area.")
+
             self.parent = parent
             self.parent.addSubArea(self)
-            print("created area. Parent: " + self.parent.getName())
 
         self.name = name
+        self.ID = Module.getUniqueID()
 
         self.subAreas = []
         self.observers = []
 
-
         Area.add(self)
 
+    def getID(self):
+        return self.ID
 
     def getObservers(self):
         return self.observers
@@ -92,8 +93,17 @@ class Area(Module):
     def getName(self):
         return self.name
 
+    def setName(self, newName):
+
+        if self.parent != None and self.parent.hasSubAreaName(newName):
+            raise ValueError("A subarea with name '" + newName + "' does already exist in this area.")
+
+        self.name = newName
+
     def addSubArea(self, area):
-        self.subAreas.append(area)
+
+        if not area in self.subAreas:
+            self.subAreas.append(area)
 
     def removeSubArea(self, area):
         pass
@@ -104,3 +114,13 @@ class Area(Module):
 
     def hasSubAreas(self):
         return len(self.subAreas) > 0
+
+    def hasSubAreaName(self, name):
+
+        name = name.lower()
+
+        for a in self.subAreas:
+            if a.getName().lower() == name:
+                return True
+
+        return False
