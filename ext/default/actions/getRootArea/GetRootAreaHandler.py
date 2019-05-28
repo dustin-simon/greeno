@@ -7,21 +7,33 @@ class GetRootAreaHandler(ActionHandler):
     
     def handleAction(self, jsonData):
 
-        rootArea = Area.getByName(Area.getConfig().get("rootAreaName"))
+        rootArea = Area.getRootArea()
 
-        if rootArea != None:
-            jsonResponse = {
-                'requestAction': self.getAction(),
-                'status': 'OK',
-                'data': {
-                    'name': rootArea.getName()
-                }
+        if rootArea == None:
+            #TODO: return fail response
+            pass
+
+        response = {
+            'requestAction': self.getAction(),
+            'status': 'OK'
+        }
+
+        data = {
+            'name': rootArea.getName(),
+            'id': rootArea.getID()
+        }
+
+        subAreas = []
+
+        for a in rootArea.getSubAreas():
+            areaObject = {
+                'name': a.getName(),
+                'id': a.getID()
             }
-        else:
-            jsonResponse = {
-                'requestAction': self.getAction,
-                'status': 'SERVER_ERROR'
-            }
+
+            subAreas.append(areaObject)
         
+        data["subAreas"] = subAreas
+        response["data"] = data
 
-        return json.dumps(jsonResponse)
+        return json.dumps(response)

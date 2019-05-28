@@ -3,6 +3,7 @@ from modules.Module import Module
 from core.config.Config import Config
 
 class Area(Module):
+
     areas = {}
 
     @classmethod
@@ -22,18 +23,33 @@ class Area(Module):
 
     @classmethod
     def initModule(self):
-        Area(self.config.get("rootAreaName"))
+        root = Area(self.config.get("rootAreaName"))
+        Area("testArea", root)
+        Area("test Area 1", root)
+
 
     @classmethod
-    def getByName(self, name):
-        if name in self.areas:
-            return self.areas[name]
+    def getByID(self, ID):
+        if ID in self.areas:
+            return self.areas[ID]
 
         raise ValueError("Area with name '" + name + "' does not exist.")
 
     @classmethod
+    def getRootArea(self):
+        
+        if self.rootArea != None:
+            return self.rootArea
+
+        return None
+
+    @classmethod
     def add(self, area):
         self.areas[area.getID()] = area
+
+    @classmethod
+    def _setRootArea(self, area):
+        self.rootArea = area
 
     @classmethod
     def has(self, name):
@@ -41,30 +57,34 @@ class Area(Module):
 
     @classmethod
     def isValidName(self, name):
-        if name == '' or name == None:
+        if name == '' or name == None or name == Area.config.get("rootAreaName"):
             return False
         
         return True
 
     def __init__(self, name='', parent=None):
-        if not Area.isValidName(name):
-            raise ValueError("'" + name + "' is not a valid name for an area.")
-
+        
         if parent == None:
             
+            rootAreaName = Area.config.get("rootAreaName")
+
             if name == rootAreaName:
                 self.parent = None
+                Area._setRootArea(self)
             else:
+                if not Area.isValidName(name):
+                    raise ValueError("'" + name + "' is not a valid name for an area.")
 
-                rootAreaName = Area.config.get("rootAreaName")
-
-                self.parent = Area.getByName(rootAreaName)
+                self.parent = Area.getRootArea()
                 self.parent.addSubArea(self)
 
         else:
 
             if parent.hasSubAreaName(name):
                 raise ValueError("A subarea with name '" + name + "' does already exist in this area.")
+
+            if not Area.isValidName(name):
+                raise ValueError("'" + name + "' is not a valid name for an area.")
 
             self.parent = parent
             self.parent.addSubArea(self)
