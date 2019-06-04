@@ -35,6 +35,7 @@ class Application():
         #TODO: start the application
 
     def stop(self):
+        Module.stopModules()
         print("GoodBye!")
         #TODO: stop the application
 

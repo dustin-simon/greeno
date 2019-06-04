@@ -1,6 +1,9 @@
 from core.application.Application import Application
 from modules.Module import Module
 from core.config.Config import Config
+import os
+import os.path
+import xml.etree.ElementTree as ET
 
 class Area(Module):
 
@@ -13,19 +16,29 @@ class Area(Module):
 
     @classmethod
     def loadData(self):
-        pass
-        #TODO: load saved data
+        saveFile = self.config.get("savePath") + "/areas.xml"
+
+        if not os.path.isfile(saveFile):
+            return
+
+        #TODO load areas
+        
 
     @classmethod
     def saveData(self):
-        pass
-        #TODO: save configured data
+        root = ET.Element("areas")
+
+        for ID in self.areas:
+            area = self.areas[ID]
+
+            areaElement = ET.SubElement(root, "area").text = area.getName()
+
+        ET.ElementTree(root).write(self.config.get("savePath") + "/areas.xml",  encoding="utf-8", xml_declaration=True, default_namespace=None, method="xml", short_empty_elements=True)
+
 
     @classmethod
     def initModule(self):
-        root = Area(self.config.get("rootAreaName"))
-        Area("testArea", root)
-        Area("test Area 1", root)
+        pass
 
 
     @classmethod

@@ -6,8 +6,12 @@ import importlib
 import string
 import random
 import hashlib
+import os
+import os.path
 
 class Module(ABC):
+
+    modules = []
 
     @staticmethod
     def getUniqueID():
@@ -29,7 +33,9 @@ class Module(ABC):
             package = values["package"]
 
             moduleClass = getattr(importlib.import_module(package), baseClass)
-            moduleClass.startModule()
+            moduleClass.startModule(name)
+
+            self.modules.append(moduleClass)
 
     @classmethod
     def _createGlobalConfig(self):
@@ -37,17 +43,40 @@ class Module(ABC):
         confPath = Application.getApplication().getConfig().get("applicationPath") + "/config/modules/modules.xml"
         self.moduleConf = Config(confPath, ModuleConfigReader())
         self.moduleConf.load()
+
+    @classmethod
+    def stopModules(self):
+        for m in self.modules:
+            m.closeModule()
+
+    @classmethod
+    def getModuleName(self):
+        return self.name
  
     @classmethod
-    def startModule(self):
+    def startModule(self, name):
+        self.name = name
         self.config = self.loadConfig()
         self.config.load()
+        self.prepareSavePath()
         self.initModule()
         self.loadData()
 
     @classmethod
     def getConfig(self):
         return self.config
+
+    @classmethod
+    def prepareSavePath(self):
+        from core.application.Application import Application
+        appSavePath = Application.getApplication().getConfig().get("savePath")
+
+        savePath = appSavePath + "/" + self.name
+
+        self.config.getProperties()["savePath"] = savePath
+
+        if not os.path.isdir(savePath):
+            os.makedirs(savePath)
 
     @classmethod
     def closeModule(self):
@@ -72,5 +101,4 @@ class Module(ABC):
     @abstractmethod
     def initModule(self):
         pass
-
     
