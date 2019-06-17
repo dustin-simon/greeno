@@ -4,6 +4,7 @@ from core.config.Config import Config
 import os
 import os.path
 import xml.etree.ElementTree as ET
+from modules.area.AreaSaver import AreaSaver
 
 class Area(Module):
 
@@ -19,22 +20,28 @@ class Area(Module):
         saveFile = self.config.get("savePath") + "/areas.xml"
 
         if not os.path.isfile(saveFile):
+            rootAreaName = self.config.get("rootAreaName")
+            Area(rootAreaName)
             return
 
-        #TODO load areas
+        from modules.area.AreaLoader import AreaLoader
+
+        loader = AreaLoader()
+        loader.loadFromFile(saveFile)
         
 
     @classmethod
     def saveData(self):
-        root = ET.Element("areas")
+        areaSaver = AreaSaver(self.getRootArea())
 
-        for ID in self.areas:
-            area = self.areas[ID]
+        rootElement = areaSaver.getXMLTree()
 
-            areaElement = ET.SubElement(root, "area").text = area.getName()
-
-        ET.ElementTree(root).write(self.config.get("savePath") + "/areas.xml",  encoding="utf-8", xml_declaration=True, default_namespace=None, method="xml", short_empty_elements=True)
-
+        ET.ElementTree(rootElement).write(self.config.get("savePath") + "/areas.xml",
+            encoding="utf-8", 
+            xml_declaration=True, 
+            default_namespace=None, 
+            method="xml", 
+            short_empty_elements=False)
 
     @classmethod
     def initModule(self):
@@ -75,7 +82,7 @@ class Area(Module):
         
         return True
 
-    def __init__(self, name='', parent=None):
+    def __init__(self, name='', areaID=None, parent=None):
         
         if parent == None:
             
@@ -103,7 +110,11 @@ class Area(Module):
             self.parent.addSubArea(self)
 
         self.name = name
-        self.ID = Module.getUniqueID()
+
+        if areaID == None:
+            self.ID = Module.getUniqueID()
+        else:
+            self.ID = areaID
 
         self.subAreas = []
         self.observers = []
