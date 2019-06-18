@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<action>
+    <name property="true">CHANGE_AREA_NAME</name>
+    <className property="true">ChangeAreaNameHandler</className>
+</action>
