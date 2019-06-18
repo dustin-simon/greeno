@@ -26,9 +26,13 @@ class Area(Module):
 
         from modules.area.AreaLoader import AreaLoader
 
-        loader = AreaLoader()
-        loader.loadFromFile(saveFile)
-        
+        try:
+            loader = AreaLoader()
+            loader.loadFromFile(saveFile)
+        except Exception as e:
+            rootAreaName = self.config.get("rootAreaName")
+            Area(rootAreaName)
+
 
     @classmethod
     def saveData(self):
