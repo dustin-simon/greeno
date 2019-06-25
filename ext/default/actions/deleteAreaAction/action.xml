@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<action>
+    <name property="true">DELETE_AREA</name>
+    <className property="true">DeleteAreaHandler</className>
+</action>

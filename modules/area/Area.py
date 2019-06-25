@@ -153,9 +153,16 @@ class Area(Module):
         if not area in self.subAreas:
             self.subAreas.append(area)
 
-    def removeSubArea(self, area):
-        pass
-        #TODO: remove sub area
+    def remove(self):
+
+        for a in self.subAreas:
+            a.remove()
+
+        self.parent.removeSubArea(self)
+        Area.areas[self.ID] = None
+        
+    def removeSubArea(self, subArea):
+        self.subAreas.remove(subArea)
     
     def getSubAreas(self):
         return self.subAreas
