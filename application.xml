@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<application>
-    <name property="true">greeno</name>
-    <version property="true">0.0.0</version>
-    <license property="true">proprietary</license>
-    <copyright property="true">(c) by Dustin Simon</copyright>
-    <author property="true">Dustin Simon</author>
-</application>
