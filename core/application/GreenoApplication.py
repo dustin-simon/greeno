@@ -1,4 +1,4 @@
-from lib.core.application.Application import Application
+from lib.app.core.application.Application import Application
 
 class GreenoApplication(Application):
 
