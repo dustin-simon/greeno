@@ -4,7 +4,8 @@ from core.application.GreenoApplication import GreenoApplication
 
 configFile = "../system.xml"
 app = GreenoApplication(configFile)
-app.config.print()
+
+print(app.config.getProperties())
 
 app.start()
 app.getStatusObserver().join()

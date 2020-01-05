@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<equipment
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="lib/schema/equipment/equipment.xsd">
+
+    <defaults>
+
+        <group name="connection">
+            <component name="bluetooth"/>
+        </group>
+
+        <group name="dataInterface">
+            <component name="bluetooth">
+                <config>
+                    <serviceName>Greeno</serviceName>
+                    <uuid>94f39d29-7d6d-437d-973b-fba39e49d4ee</uuid>
+                </config>
+            </component>
+            <!-- <component name="web" /> -->
+        </group>
+    
+    </defaults>
+
+    <customLoadPath>default/equipment</customLoadPath>
+
+</equipment>
