@@ -16,7 +16,11 @@
                     <uuid>94f39d29-7d6d-437d-973b-fba39e49d4ee</uuid>
                 </config>
             </component>
-            <!-- <component name="web" /> -->
+            <component name="web">
+                <config>
+                    <port>8000</port>
+                </config>
+            </component>
         </group>
     
     </defaults>
