@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<action
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="lib/schema/action.xsd">
+    <name>dashboard</name>
+    <className>DashboardHandler</className>
+</action>
