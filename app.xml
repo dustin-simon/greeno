@@ -3,6 +3,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="lib/schema/app.xsd">
 
-    <actionHandlers>default/action</actionHandlers>
+    <paths>
+        <systemStatus>../STATUS</systemStatus>
+        <equipmentSet>equipment.xml</equipmentSet>
+        <actionHandlers>default/action</actionHandlers>
+    </paths>
 
 </application>
