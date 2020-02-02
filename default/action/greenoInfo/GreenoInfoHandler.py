@@ -5,11 +5,11 @@ from datetime import datetime
 
 class GreenoInfoHandler(InfoHandler):
 
-    def request(self, jsonData):
+    def request(self, request, response):
 
-        response = super().request(jsonData)
+        response = super().request(request, response)
 
-        info = response[Action.REQUEST_DATA_KEY]
+        info = response.getData()
 
         data = [
             {
@@ -27,6 +27,6 @@ class GreenoInfoHandler(InfoHandler):
             }
         ]
 
-        response[Action.REQUEST_DATA_KEY] = data
+        response.setData(data)
 
         return response

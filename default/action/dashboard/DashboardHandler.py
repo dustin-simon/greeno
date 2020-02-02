@@ -3,9 +3,7 @@ from lib.app.core.action.Action import Action
 
 class DashboardHandler(ActionHandler):
 
-    def request(self, jsonData):
-
-        response = self.createResponse()
+    def request(self, request, response):
 
         data = [
             {
@@ -14,6 +12,6 @@ class DashboardHandler(ActionHandler):
             }
         ]
 
-        response[Action.REQUEST_DATA_KEY] = data
+        response.setData(data)
 
         return response
