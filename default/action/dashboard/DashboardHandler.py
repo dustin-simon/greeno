@@ -1,5 +1,4 @@
 from lib.app.core.action.ActionHandler import ActionHandler
-from lib.app.core.action.Action import Action
 
 class DashboardHandler(ActionHandler):
 
